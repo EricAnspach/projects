@@ -4,13 +4,13 @@ public class GradeConverterApp {
 
         String choice = "y";
 
-        Console.displayLine("Welcome to the Letter Grade Converter");
+        Console.displayLine("Welcome to the Letter Grade Converter\n");
 
         while (choice.equalsIgnoreCase("y")) {
 
             Grade grade = new Grade();
 
-            int userEntry = Console.getInt("\nEnter numerical grade: ", 0, 100);
+            int userEntry = Console.getInt("Enter numerical grade: ", 0, 100);
             grade.setNumber(userEntry);
 
             String letter = grade.getLetter(grade.getNumber());
@@ -18,6 +18,7 @@ public class GradeConverterApp {
             Console.displayLine("Letter grade: " + letter + "\n");
 
             choice = Console.getString("Continue? (y/n): ", "y", "n");
+            Console.displayLine();
         }
     }
 
