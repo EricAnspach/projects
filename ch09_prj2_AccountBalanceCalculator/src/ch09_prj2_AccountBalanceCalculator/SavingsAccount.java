@@ -1,31 +1,26 @@
 package ch09_prj2_AccountBalanceCalculator;
 
 public class SavingsAccount extends Account {
-	double monthlyRate;
+	double monthlyIntRate;
 	double monthlyIntPayment;
 	
 	public SavingsAccount(double rate) {
-		monthlyRate = rate;
+		monthlyIntRate = rate;
 	}
 
-	public double getMonthlyRate() {
-		return monthlyRate;
+	public double getMonthlyIntRate() {
+		return monthlyIntRate;
 	}
 
-	public void setMonthlyRate(double monthlyRate) {
-		this.monthlyRate = monthlyRate;
+	public void setMonthlyIntPayment(double balance, double rate) {
+		monthlyIntPayment = balance * rate;
 	}
 
-	public double getMonthlyPayment() {
+	public double getMonthlyIntPayment() {
 		return monthlyIntPayment;
-	}
-
-	public void setMonthlyPayment(double monthlyPayment) {
-		this.monthlyIntPayment = monthlyPayment;
 	}
 	
 	public void applyPaymentToBalance() {
-		setMonthlyPayment(getMonthlyPayment() * monthlyRate);
-		setBalance(getBalance() + monthlyIntPayment);
+		setBalance(getBalance() + getMonthlyIntPayment());
 	}
 }
