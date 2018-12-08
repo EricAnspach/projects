@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class MyConsole extends Console {
 
-    private static Scanner sc = new Scanner(System.in);
+ //   private static Scanner sc = new Scanner(System.in);
 
     public MyConsole() {
 

@@ -23,10 +23,14 @@ public class Console {
 		System.out.print(prompt);
 		
 		boolean isValid = false;
-		while (!isValid) {
-			s = sc.next();
-			if(s.equalsIgnoreCase(s1) || s.equalsIgnoreCase(s2)) {
-				isValid = true;
+		while (!isValid) {			
+			if (sc.hasNext()) {
+				s = sc.next();
+				if(s.equalsIgnoreCase(s1) || s.equalsIgnoreCase(s2)) {
+					isValid = true;
+				} else {
+					System.out.println("Error! This entry is required. Try again.");
+				}
 			} else {
 				System.out.println("Error! This entry is required. Try again.");
 			}

@@ -109,7 +109,9 @@ public class ConsoleIO implements UserIO {
 		return s;
 	}
 	
-
+/**
+ * 
+ */
 	@Override
 	public String getString(String prompt, String s1, String s2) {
 		String s = "";

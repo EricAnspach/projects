@@ -1,7 +1,5 @@
 public class NumberCheckerApp {
 
-
-
     public static void main(String[] args) {
 
         MyConsole myConsole = new MyConsole();
