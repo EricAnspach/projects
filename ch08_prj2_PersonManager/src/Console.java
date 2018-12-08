@@ -14,9 +14,10 @@ public class Console {
 
     public static String getString(String prompt) {
 		String s = "";
-        System.out.print(prompt);
+        
 		boolean isValid = false;
 		while (!isValid) {
+			System.out.print(prompt);
 			s = sc.nextLine();
 			if (s.equals("")) {
 				System.out.println("Error! This entry is required. Try again.");				
@@ -28,11 +29,10 @@ public class Console {
     }
     
 	public static String getString(String prompt, String s1, String s2) {
-		String s = "";
-		System.out.print(prompt);
-		
+		String s = "";		
 		boolean isValid = false;
 		while (!isValid) {	
+			System.out.print(prompt);
 			s = sc.nextLine();
 			if (s.equals("")) {				
 				System.out.println("Error! This entry is required. Try again.");				
@@ -46,6 +46,29 @@ public class Console {
 		}
 		return s;
 	}
+	
+    public static String getSSNString(String prompt) {
+		String s = "";        
+		boolean isValid = false;
+		while (!isValid) {
+			System.out.print(prompt);
+			s = sc.nextLine();
+			if (s.equals("")) {
+				System.out.println("Error! This entry is required. Try again.");				
+			} else {	
+				if (s.length() < 9 || s.length() == 10 || s.length() > 11) {
+					System.out.println("Please enter a 9 digit SSN.");
+				} else {
+					if (s.length() == 11) {
+						s = s.substring(0,3) + s.substring(4,6) + s.substring(7,11);
+					}
+					isValid = true;	
+				}
+							
+			}			
+		}		
+		return s;
+    }
 
     public static int getInt(String prompt) {
         int i = 0;
