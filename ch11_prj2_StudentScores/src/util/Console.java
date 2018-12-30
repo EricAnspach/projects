@@ -49,20 +49,6 @@ public class Console {
 		return s;
 	}
 
-//    public static int getInt(String prompt) {
-//        int i = 0;
-//        while (true) {
-//            System.out.print(prompt);
-//            try {
-//                i = Integer.parseInt(sc.nextLine());
-//                break;
-//            } catch (NumberFormatException e) {
-//                System.out.println("Error! Invalid integer. Try again.");
-//            }
-//        }
-//        return i;
-//    }
-//
     public static int getInt(String prompt) {
         int i = 0;
         boolean isValid = false;
@@ -80,38 +66,23 @@ public class Console {
     }
 
     public static int getInt(String prompt,
-            int min, int max) {
+                             int min, int max) {
         int i = 0;
         boolean isValid = false;
         while (!isValid) {
             i = getInt(prompt);
-            if (i <= min) {
+            if (i < min) {
                 System.out.println(
-                        "Error! Number must be greater than " + min + ".");
-            } else if (i >= max) {
+                        "Error! Number must be " + min + " or higher.");
+            } else if (i > max) {
                 System.out.println(
-                        "Error! Number must be less than " + max + ".");
+                        "Error! Number must be no greater than " + max + ".");
             } else {
                 isValid = true;
             }
         }
         return i;
     }
-
-//    public static double getDouble(String prompt) {
-//        double d = 0;
-//        while (true) {
-//            System.out.print(prompt);
-//            try {
-//                d = Double.parseDouble(sc.nextLine());
-//                break;
-//            } catch (NumberFormatException e) {
-//                System.out.println("Error! Invalid decimal. Try again.");
-//            }
-//        }
-//        return d;
-//    }
-    
 	
     public static double getDouble(String prompt) {
         double d = 0.0;

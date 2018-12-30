@@ -1,6 +1,6 @@
 package business;
 
-public class Student {
+public class Student implements Comparable {
 
     private String firstName;
     private String lastName;
