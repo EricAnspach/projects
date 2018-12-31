@@ -21,5 +21,9 @@ public class StudentScoresApp {
             students[i] = student;
         }
 
+        Console.displayLine("\nSUMMARY");
+
+        // enhanced for loop to display students
+
     }
 }
