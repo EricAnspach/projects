@@ -38,4 +38,23 @@ public class Student implements Comparable {
     public void setScore(int score) {
         this.score = score;
     }
+
+    @Override
+    public int compareTo(Object o) {
+        Student s = (Student) o;
+
+        if (this.getLastName().compareToIgnoreCase(s.getLastName()) < 0) {
+            return -1;
+        } else if (this.getLastName().compareToIgnoreCase(s.getLastName()) > 0) {
+            return 1;
+        } else {
+            if (this.getFirstName().compareToIgnoreCase(s.getFirstName()) < 0) {
+                return -1;
+            } else if (this.getFirstName().compareToIgnoreCase(s.getFirstName()) > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
 }
