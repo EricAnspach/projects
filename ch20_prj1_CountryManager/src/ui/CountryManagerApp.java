@@ -3,6 +3,7 @@ package ui;
 import db.CountryDB;
 import util.Console;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -41,9 +42,29 @@ public class CountryManagerApp {
                     break;
                 case 2:
                     // Add a country
+                	String name = Console.getString("Enter country: ");
+                	try {
+						if (countryDB.addCountry(name)) {
+							Console.displayLine();
+							Console.displayLine(name + " has been added.\n");
+						}
+					} catch (Exception e) {
+						Console.displayLine("Exception occurred adding a country.");
+						e.printStackTrace();
+					}
                     break;
                 case 3:
                     // Delete a country
+                	name = Console.getString("Enter country to delete: ");
+                	try {
+						if (countryDB.deleteCountry(name)) {
+							Console.displayLine();
+							Console.displayLine(name + " has been deleted from list.\n");
+						}
+					} catch (Exception e) {
+						Console.displayLine("Exception occurred trying to delete the country " + name + ".");
+						e.printStackTrace();
+					}
                     break;
                 case 4:
                     break;

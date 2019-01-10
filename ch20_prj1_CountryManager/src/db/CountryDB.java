@@ -29,12 +29,34 @@ public class CountryDB {
         return countries;
     }
 
-    public boolean addCountry(String country) {
-        return true;
+    public boolean addCountry(String country) throws SQLException {
+    	boolean success = false;
+    	Connection connection = getConnection();
+    	
+    	String query = "insert into country " +
+    			"values (id, '" + country + "')";
+    	
+    	Statement statement = connection.createStatement();
+    	int rowCount = statement.executeUpdate(query);
+    	
+    	if (rowCount > 0) {
+    		success = true;
+    	}
+        return success;
     }
 
-    public boolean deleteCountry(String country) {
-        return true;
+    public boolean deleteCountry(String country) throws SQLException {    	
+    	boolean success = false;
+    	Connection connection = getConnection();
+    	String query = "DELETE FROM Country WHERE Name = '" + country + "'";
+    	Statement statement = connection.createStatement();
+    	int rowCount = statement.executeUpdate(query);
+    	
+    	if (rowCount > 0) {
+			success = true;
+		}
+    	
+        return success;
     }
 
 }
