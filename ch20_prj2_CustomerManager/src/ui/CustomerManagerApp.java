@@ -36,13 +36,14 @@ public class CustomerManagerApp {
 				}
 			} else if (option.equalsIgnoreCase("add")) {
 				// Add a customer
+				Console.displayLine();
 				String email = Console.getString("Enter customer email address: ");
 				String firstName = Console.getString("Enter first name: ");
 				String lastName = Console.getString("Enter last name: ");
+				Console.displayLine();
 
 				try {
-					if (customerDB.addCustomer(firstName, lastName, email)) {
-						Console.displayLine();
+					if (customerDB.addCustomer(firstName, lastName, email)) {						
 						Console.displayLine(firstName + " " + lastName + " was added to the database.");
 					}
  				} catch (SQLException s) {
@@ -53,8 +54,50 @@ public class CustomerManagerApp {
 
 			} else if (option.equalsIgnoreCase("update")) {
 				// Update a customer
+				String email = Console.getString("\nEnter email for customer to update: ");
+				// getCustomer() in try catch block
+				try {
+					Customer customer = customerDB.getCustomer(email);
+					try {
+						String firstName = Console.getString("Enter first name: ");
+						String lastName = Console.getString("Enter last name: ");
+						Console.displayLine();
+						if (customerDB.updateCustomer(email, firstName, lastName)) {							
+							Console.displayLine("Record for " + firstName + " " + lastName +
+									" has been updated.");
+						}
+					} catch (SQLException s) {
+						Console.displayLine("\nException occurred while attempting to update customer1.");
+						s.printStackTrace();
+					}
+				} catch (SQLException s) {
+					Console.displayLine("\nException occurred while attempting to update customer.");
+					s.printStackTrace();
+				}
+
+				
 			} else if (option.equalsIgnoreCase("del")) {
 				// Delete a customer
+				String email = Console.getString("\nEnter email for customer to delete: ");
+				Console.displayLine();
+				// getCustomer() in try catch block
+				try {
+					Customer customer = customerDB.getCustomer(email);
+					try {
+						if (customerDB.deleteCustomer(email)) {							
+							Console.displayLine(customer.getFirstName() + " " + customer.getLastName() +
+									" was deleted from the database.");
+						}
+					} catch (SQLException s) {
+						Console.displayLine("\nException occurred while attempting to delete customer.");
+						s.printStackTrace();
+					}
+				} catch (SQLException s) {
+					Console.displayLine("\nException occurred while attempting to delete customer.");
+					s.printStackTrace();
+				}
+
+
 			} else if (option.equalsIgnoreCase("exit")) {
 				runLoop = false;
 			} else {

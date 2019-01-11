@@ -19,7 +19,6 @@ public class CustomerDB implements CustomerDAO<Customer> {
 
         Connection connection = DriverManager.getConnection(dbURL, username, password);
         return connection;
-
     }
 
     @Override
@@ -41,8 +40,19 @@ public class CustomerDB implements CustomerDAO<Customer> {
 
     @Override
     public Customer getCustomer(String email) throws SQLException {
-
-        return null;
+        Connection connection = getConnection();
+    	
+    	String query = "SELECT * FROM customer WHERE EMAILADDRESS = '" + email + "';";
+    	Statement statement = connection.createStatement();
+    	ResultSet rs = statement.executeQuery(query);
+    	if (rs.next()) {
+        	String firstName = rs.getString(2);
+        	String lastName = rs.getString(3);
+        	Customer customer = new Customer(email, firstName, lastName);
+            return customer;
+		} else {
+			return null;
+		}   	
     }
 
     @Override
@@ -60,20 +70,37 @@ public class CustomerDB implements CustomerDAO<Customer> {
         if (rowCount > 0) {
             success = true;
         }
-
         return success;
     }
 
     @Override
-    public boolean updateCustomer(String email) throws SQLException {
+    public boolean updateCustomer(String email, String firstName, String lastName) throws SQLException {
+        boolean success = false;
+        Connection connection = getConnection();
+        String query = "UPDATE customer SET FirstName = '" + firstName + "', LastName = '" + lastName +
+        				"' WHERE EmailAddress = '" + email + "';";
 
-        return true;
+        Statement statement = connection.createStatement();
+        int rowCount = statement.executeUpdate(query);
+        
+        if (rowCount > 0) {
+			success = true;
+		}
+        return success;
     }
 
     @Override
     public boolean deleteCustomer(String email) throws SQLException {
+        boolean success = false;
+        Connection connection = getConnection();
+        String query = "DELETE FROM customer WHERE EMAILADDRESS = '" + email + "';";
+        Statement statement = connection.createStatement();
+        int rowCount = statement.executeUpdate(query);
 
-        return true;
+        if (rowCount > 0) {
+            success = true;
+        }
+        return success;
     }
 
 }
