@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Vendor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String code;
     private String name;
@@ -97,4 +97,13 @@ public class Vendor {
     public void setPreApproved(boolean preApproved) {
         isPreApproved = preApproved;
     }
+
+	@Override
+	public String toString() {
+		return "Vendor [id=" + id + ", code=" + code + ", name=" + name + ", address=" + address + ", city=" + city
+				+ ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", email=" + email
+				+ ", isPreApproved=" + isPreApproved + "]";
+	}
+    
+    
 }

@@ -1,6 +1,9 @@
 package com.prs.business;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import com.sun.javafx.beans.IDProperty;
 
@@ -8,7 +11,7 @@ import com.sun.javafx.beans.IDProperty;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String userName;
     private String password;
@@ -90,6 +93,17 @@ public class User {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", email=" + email + ", isReviewer="
+				+ isReviewer + ", isAdmin=" + isAdmin + "]";
+	}
+    
+    
+    
+    
 }
 
 
