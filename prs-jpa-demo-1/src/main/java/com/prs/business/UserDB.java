@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;import javax.transaction.TransactionalException;
 
 import com.prs.db.DBUtil;
 
@@ -36,5 +37,42 @@ public class UserDB {
 			//DBUtil.closeEMF();
 		}
 		return users;
+	}
+	
+	public static boolean add(User user) {
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		boolean success = false;
+;
+		try {
+			trans.begin();
+			em.persist(user);
+			trans.commit();
+			success = true;
+		} catch (Exception e) {
+			System.out.println(e);
+			trans.rollback();
+		} finally {
+			em.close();
+		}
+		
+		return success;
+	}
+	
+	public static void delete(User user) {
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		
+		try {
+			trans.begin();
+			em.remove(em.merge(user));
+			trans.commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			trans.rollback();
+		} finally {
+			em.close();
+		}
+		
 	}
 }

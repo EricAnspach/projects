@@ -64,7 +64,7 @@ public class Prs_db_app {
 						User u = userDB.get(id);
 						System.out.println(u.toString());
 					} catch (Exception e) {
-						Console.displayLine("Exception occured getting information for ID " + id + ".");
+						Console.displayLine("Exception occurred getting information for ID " + id + ".");
 						e.printStackTrace();
 					}
                 default:

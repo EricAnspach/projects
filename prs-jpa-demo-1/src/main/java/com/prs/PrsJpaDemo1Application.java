@@ -39,6 +39,34 @@ public class PrsJpaDemo1Application {
 				int id = Console.getInt("Enter user id: ");
 				User user = UserDB.getUserById(id);
 				System.out.println(user);
+			case 3:
+				// add user
+				User userToAdd = new User();
+            	Console.displayLine("New user...");
+            	String userName = Console.getString("Enter username: ");
+            	String password = Console.getString("Enter password: ");
+            	String firstName = Console.getString("Enter first name: ");
+            	String lastName = Console.getString("Enter last name: ");
+            	String phoneNumber = Console.getString("Enter phone number: ");
+            	String email = Console.getString("Enter email address: ");
+            	
+            	userToAdd.setUserName(userName);
+            	userToAdd.setPassword(password);
+            	userToAdd.setFirstName(firstName);
+            	userToAdd.setLastName(lastName);
+            	userToAdd.setPhoneNumber(phoneNumber);
+            	userToAdd.setEmail(email);         	         	
+								
+				if (UserDB.add(userToAdd)) {
+					Console.displayLine("User " + userName + " added to the database.");
+				}
+				break;
+			case 4:
+				// remove user
+				int idToRemove = Console.getInt("Enter id of user to remove: ");
+				User userToRemove = UserDB.getUserById(idToRemove);
+				UserDB.delete(userToRemove);			
+				break;
 			case 5:
 				// get all vendors
 				List<Vendor> vendors = VendorDB.getAll();
@@ -53,6 +81,38 @@ public class PrsJpaDemo1Application {
 				Vendor vendor = VendorDB.getVendorById(id);
 				System.out.println(vendor);
 				break;
+			case 7:
+				// Add vendor
+				Vendor vendorToAdd = new Vendor();
+            	Console.displayLine("New vendor...");
+            	String code = Console.getString("Enter vendor code: ");
+            	String name = Console.getString("Enter name: ");
+            	String address = Console.getString("Enter street address: ");
+            	String city = Console.getString("Enter city: ");
+            	String state = Console.getString("Enter state: ");
+            	String zip = Console.getString("Enter zip code: ");
+             	String vendorPhone = Console.getString("Enter phone number: ");
+            	String vendorEmail = Console.getString("Enter email address: ");
+            	
+            	vendorToAdd.setCode(code);
+            	vendorToAdd.setName(name);
+            	vendorToAdd.setAddress(address);
+            	vendorToAdd.setCity(city);
+            	vendorToAdd.setState(state);
+            	vendorToAdd.setZip(zip);
+            	vendorToAdd.setPhoneNumber(vendorPhone);
+            	vendorToAdd.setEmail(vendorEmail);                  	         	
+								
+				if (VendorDB.add(vendorToAdd)) {
+					Console.displayLine("Vendor " + name + " added to the database.");
+				}
+				break;
+			case 8:
+				// Remove vendor
+				int vendorIdToRemove = Console.getInt("Enter id of vendor to remove: ");
+				Vendor vendorToRemove = VendorDB.getVendorById(vendorIdToRemove);
+				VendorDB.delete(vendorToRemove);			
+				break;
 			default:
 				break;
 			}
@@ -65,8 +125,12 @@ public class PrsJpaDemo1Application {
 		Console.displayLine("Options");
 		Console.displayLine("1 - List users");
 		Console.displayLine("2 - Get a user");
+		Console.displayLine("3 - Add user");
+		Console.displayLine("4 - Remove user");
 		Console.displayLine("5 - List vendors");
 		Console.displayLine("6 - Get a vendor");
+		Console.displayLine("7 - Add vendor");
+		Console.displayLine("8 - Remove vendor");
 		Console.displayLine("9 - Exit");
 	}	
 }
