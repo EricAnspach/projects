@@ -6,14 +6,33 @@ import javax.persistence.*;
 public class Product {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int vendorId;
+//	private int vendorID;
+	@ManyToOne
+	@JoinColumn(name="vendorID")
+	private Vendor vendor;
 	private String partNumber;
 	private String name;
 	private double price;
 	private String unit;
 	private String photoPath;
+	
+	public Product() {
+		super();
+	}
+
+	public Product(int id, Vendor vendor, String partNumber, String name, double price, String unit, String photoPath) {
+		super();
+		this.id = id;
+//		this.vendorID = vendorID;
+		this.vendor = vendor;
+		this.partNumber = partNumber;
+		this.name = name;
+		this.price = price;
+		this.unit = unit;
+		this.photoPath = photoPath;
+	}
 
 	public int getId() {
 		return id;
@@ -23,13 +42,12 @@ public class Product {
 		this.id = id;
 	}
 
-	@ManyToOne
-	public int getVendorId() {
-		return vendorId;
+	public Vendor getVendor() {
+		return vendor;
 	}
 
-	public void setVendorId(int vendorId) {
-		this.vendorId = vendorId;
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 
 	public String getPartNumber() {
@@ -71,4 +89,12 @@ public class Product {
 	public void setPhotoPath(String photoPath) {
 		this.photoPath = photoPath;
 	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", vendor: " + vendor + ", partNumber=" + partNumber + ", name=" + name
+				+ ", price=" + price + ", unit=" + unit + ", photoPath=" + photoPath + "]";
+	}
+	
+	
 }

@@ -5,16 +5,17 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Query;import javax.transaction.TransactionalException;
+import javax.persistence.Query;
 
 import com.prs.db.DBUtil;
 
-public class UserDB {
-	public static User getUserById(int userID) {
+public class PurchaseRequestDB {
+
+	public static PurchaseRequest getPurchaseRequestById(int purchaseRequestID) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		try {
-			User user = em.find(User.class, userID);			
-			return user;
+			PurchaseRequest purchaseRequest = em.find(PurchaseRequest.class, purchaseRequestID);			
+			return purchaseRequest;
 		}
 		finally {
 			em.close();
@@ -23,29 +24,28 @@ public class UserDB {
 		
 	}
 
-	public static List<User> getAll() {
+	public static List<PurchaseRequest> getAll() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		List<User> users = new ArrayList<>();
+		List<PurchaseRequest> purchaseRequests = new ArrayList<>();
 		try {
-			Query q = em.createQuery("SELECT u FROM User u");
-			users = q.getResultList();
-			
+			Query q = em.createQuery("SELECT p FROM PurchaseRequest p");
+			purchaseRequests = q.getResultList();			
 		}
 		finally {
 			em.close();
 			//DBUtil.closeEMF();
 		}
-		return users;
+		return purchaseRequests;
 	}
 	
-	public static boolean add(User user) {
+	public static boolean add(PurchaseRequest purchaseRequest) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
 		boolean success = false;
 ;
 		try {
 			trans.begin();
-			em.persist(user);
+			em.persist(purchaseRequest);
 			trans.commit();
 			success = true;
 		} catch (Exception e) {
@@ -54,24 +54,22 @@ public class UserDB {
 		} finally {
 			em.close();
 		}
-		
 		return success;
 	}
 	
-	public static void delete(User user) {
+	public static void delete(PurchaseRequest purchaseRequest) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
 		
 		try {
 			trans.begin();
-			em.remove(em.merge(user));
+			em.remove(em.merge(purchaseRequest));
 			trans.commit();
 		} catch (Exception e) {
 			System.out.println(e);
 			trans.rollback();
 		} finally {
 			em.close();
-		}
-		
+		}		
 	}
 }

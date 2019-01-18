@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class PurchaseRequestLineItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int purchaseRequestId;
     private int productId;

@@ -5,47 +5,48 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Query;import javax.transaction.TransactionalException;
+import javax.persistence.Query;
 
 import com.prs.db.DBUtil;
 
-public class UserDB {
-	public static User getUserById(int userID) {
+public class PurchaseRequestLineItemDB {
+	
+	public static PurchaseRequestLineItem getPurchaseRequestLineItemById(int purchaseRequestLineItemID) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		try {
-			User user = em.find(User.class, userID);			
-			return user;
+			PurchaseRequestLineItem purchaseRequestLineItem = em.find(PurchaseRequestLineItem.class, purchaseRequestLineItemID);
+			
+			return purchaseRequestLineItem;
 		}
 		finally {
 			em.close();
 			//DBUtil.closeEMF();
 		}
-		
 	}
 
-	public static List<User> getAll() {
+	public static List<PurchaseRequestLineItem> getAll() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		List<User> users = new ArrayList<>();
+		List<PurchaseRequestLineItem> purchaseRequestLineItems = new ArrayList<>();
 		try {
-			Query q = em.createQuery("SELECT u FROM User u");
-			users = q.getResultList();
+			Query q = em.createQuery("SELECT p FROM PurchaseRequestLineItem p");
+			purchaseRequestLineItems = q.getResultList();
 			
 		}
 		finally {
 			em.close();
 			//DBUtil.closeEMF();
 		}
-		return users;
+		return purchaseRequestLineItems;
 	}
 	
-	public static boolean add(User user) {
+	public static boolean add(PurchaseRequestLineItem purchaseRequestLineItem) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
 		boolean success = false;
 ;
 		try {
 			trans.begin();
-			em.persist(user);
+			em.persist(purchaseRequestLineItem);
 			trans.commit();
 			success = true;
 		} catch (Exception e) {
@@ -58,13 +59,13 @@ public class UserDB {
 		return success;
 	}
 	
-	public static void delete(User user) {
+	public static void delete(PurchaseRequestLineItem purchaseRequestLineItem) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
 		
 		try {
 			trans.begin();
-			em.remove(em.merge(user));
+			em.remove(em.merge(purchaseRequestLineItem));
 			trans.commit();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -74,4 +75,5 @@ public class UserDB {
 		}
 		
 	}
+
 }

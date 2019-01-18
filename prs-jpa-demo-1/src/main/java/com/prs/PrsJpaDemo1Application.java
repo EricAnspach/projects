@@ -5,6 +5,10 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.prs.business.Product;
+import com.prs.business.ProductDB;
+import com.prs.business.PurchaseRequest;
+import com.prs.business.PurchaseRequestDB;
 import com.prs.business.User;
 import com.prs.business.UserDB;
 import com.prs.business.Vendor;
@@ -22,7 +26,7 @@ public class PrsJpaDemo1Application {
 		displayMenu();
 		int option = 0;
 		
-		while (option != 9) {
+		while (option != 11) {
 			option = Console.getInt("Enter option: ");
 			
 			switch (option) {
@@ -113,6 +117,20 @@ public class PrsJpaDemo1Application {
 				Vendor vendorToRemove = VendorDB.getVendorById(vendorIdToRemove);
 				VendorDB.delete(vendorToRemove);			
 				break;
+			case 9:
+				// Get all products
+				List<Product> products = ProductDB.getAll();				
+				for (Product product : products) {
+					System.out.println(product);
+				}
+				break;
+			case 10:
+				// Get all purchase requests
+				List<PurchaseRequest> purchaseRequests = PurchaseRequestDB.getAll();				
+				for (PurchaseRequest p : purchaseRequests) {
+					System.out.println(p);
+				}
+				break;
 			default:
 				break;
 			}
@@ -131,7 +149,9 @@ public class PrsJpaDemo1Application {
 		Console.displayLine("6 - Get a vendor");
 		Console.displayLine("7 - Add vendor");
 		Console.displayLine("8 - Remove vendor");
-		Console.displayLine("9 - Exit");
+		Console.displayLine("9 - List all products");
+		Console.displayLine("10 - List all purchase requests");
+		Console.displayLine("11 - Exit");
 	}	
 }
 

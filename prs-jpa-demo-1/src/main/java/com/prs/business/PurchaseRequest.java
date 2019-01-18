@@ -6,9 +6,12 @@ import javax.persistence.*;
 public class PurchaseRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int userId;
+//    private int userId;
+    @ManyToOne
+    @JoinColumn(name="userId")
+    private User user;
     private String description;
     private String justification;
     private String dateNeeded;
@@ -17,8 +20,28 @@ public class PurchaseRequest {
     private double total;
     private String submittedDate;
     private String reasonForRejection;
+    
+    public PurchaseRequest() {
+		super();
+	}
 
-    public int getId() {
+	public PurchaseRequest(int id, int userId, String description, String justification, String dateNeeded,
+			String deliveryMode, String status, double total, String submittedDate, String reasonForRejection) {
+		super();
+		this.id = id;
+//		this.userId = userId;
+		this.user = user;
+		this.description = description;
+		this.justification = justification;
+		this.dateNeeded = dateNeeded;
+		this.deliveryMode = deliveryMode;
+		this.status = status;
+		this.total = total;
+		this.submittedDate = submittedDate;
+		this.reasonForRejection = reasonForRejection;
+	}
+
+	public int getId() {
         return id;
     }
 
@@ -26,13 +49,12 @@ public class PurchaseRequest {
         this.id = id;
     }
 
-    @ManyToOne
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getDescription() {
@@ -98,5 +120,15 @@ public class PurchaseRequest {
     public void setReasonForRejection(String reasonForRejection) {
         this.reasonForRejection = reasonForRejection;
     }
+
+	@Override
+	public String toString() {
+		return "PurchaseRequest [id=" + id + ", User: =" + user + ", description=" + description + ", justification="
+				+ justification + ", dateNeeded=" + dateNeeded + ", deliveryMode=" + deliveryMode + ", status=" + status
+				+ ", total=" + total + ", submittedDate=" + submittedDate + ", reasonForRejection=" + reasonForRejection
+				+ "]";
+	}
+    
+    
 }
 
