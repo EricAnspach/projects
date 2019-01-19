@@ -8,7 +8,10 @@ public class PurchaseRequestLineItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int purchaseRequestId;
+//    private int purchaseRequestId;
+    @ManyToOne
+    @JoinColumn(name="purchaseRequestId")
+    private PurchaseRequest purchaseRequest;
     private int productId;
     private int quantity;
 
@@ -20,16 +23,14 @@ public class PurchaseRequestLineItem {
         this.id = id;
     }
 
-    @ManyToOne
-    public int getPurchaseRequestId() {
-        return purchaseRequestId;
+    public PurchaseRequest getPurchaseRequest() {
+        return purchaseRequest;
     }
 
-    public void setPurchaseRequestId(int purchaseRequestId) {
-        this.purchaseRequestId = purchaseRequestId;
+    public void setPurchaseRequest(PurchaseRequest purchaseRequest) {
+        this.purchaseRequest = purchaseRequest;
     }
 
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     public int getProductId() {
         return productId;
     }
@@ -45,4 +46,12 @@ public class PurchaseRequestLineItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+	@Override
+	public String toString() {
+		return "PurchaseRequestLineItem [id=" + id + ", Purchase Request: " + purchaseRequest + ", productId="
+				+ productId + ", quantity=" + quantity + "]";
+	}
+    
+    
 }

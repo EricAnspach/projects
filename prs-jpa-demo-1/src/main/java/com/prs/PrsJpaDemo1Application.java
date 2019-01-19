@@ -9,6 +9,8 @@ import com.prs.business.Product;
 import com.prs.business.ProductDB;
 import com.prs.business.PurchaseRequest;
 import com.prs.business.PurchaseRequestDB;
+import com.prs.business.PurchaseRequestLineItem;
+import com.prs.business.PurchaseRequestLineItemDB;
 import com.prs.business.User;
 import com.prs.business.UserDB;
 import com.prs.business.Vendor;
@@ -26,7 +28,7 @@ public class PrsJpaDemo1Application {
 		displayMenu();
 		int option = 0;
 		
-		while (option != 11) {
+		while (option != 12) {
 			option = Console.getInt("Enter option: ");
 			
 			switch (option) {
@@ -118,16 +120,23 @@ public class PrsJpaDemo1Application {
 				VendorDB.delete(vendorToRemove);			
 				break;
 			case 9:
-				// Get all products
+				// List all products
 				List<Product> products = ProductDB.getAll();				
 				for (Product product : products) {
 					System.out.println(product);
 				}
 				break;
 			case 10:
-				// Get all purchase requests
+				// List all purchase requests
 				List<PurchaseRequest> purchaseRequests = PurchaseRequestDB.getAll();				
 				for (PurchaseRequest p : purchaseRequests) {
+					System.out.println(p);
+				}
+				break;
+			case 11:
+				// List all purchase requests line items
+				List<PurchaseRequestLineItem> purchaseRequestLineItems = PurchaseRequestLineItemDB.getAll();				
+				for (PurchaseRequestLineItem p : purchaseRequestLineItems) {
 					System.out.println(p);
 				}
 				break;
@@ -151,7 +160,8 @@ public class PrsJpaDemo1Application {
 		Console.displayLine("8 - Remove vendor");
 		Console.displayLine("9 - List all products");
 		Console.displayLine("10 - List all purchase requests");
-		Console.displayLine("11 - Exit");
+		Console.displayLine("11 - List all purchase request line items");
+		Console.displayLine("12 - Exit");
 	}	
 }
 
