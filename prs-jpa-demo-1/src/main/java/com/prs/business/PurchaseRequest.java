@@ -1,5 +1,8 @@
 package com.prs.business;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,19 +17,19 @@ public class PurchaseRequest {
     private User user;
     private String description;
     private String justification;
-    private String dateNeeded;
+    private LocalDate dateNeeded;
     private String deliveryMode;
     private String status;
     private double total;
-    private String submittedDate;
+    private LocalDateTime submittedDate;
     private String reasonForRejection;
     
     public PurchaseRequest() {
 		super();
 	}
 
-	public PurchaseRequest(int id, int userId, String description, String justification, String dateNeeded,
-			String deliveryMode, String status, double total, String submittedDate, String reasonForRejection) {
+	public PurchaseRequest(int id, int userId, String description, String justification, LocalDate dateNeeded,
+			String deliveryMode, String status, double total, LocalDateTime submittedDate, String reasonForRejection) {
 		super();
 		this.id = id;
 //		this.userId = userId;
@@ -72,14 +75,14 @@ public class PurchaseRequest {
     public void setJustification(String justification) {
         this.justification = justification;
     }
+    
+	public LocalDate getDateNeeded() {
+		return dateNeeded;
+	}
 
-    public String getDateNeeded() {
-        return dateNeeded;
-    }
-
-    public void setDateNeeded(String dateNeeded) {
-        this.dateNeeded = dateNeeded;
-    }
+	public void setDateNeeded(LocalDate dateNeeded) {
+		this.dateNeeded = dateNeeded;
+	}
 
     public String getDeliveryMode() {
         return deliveryMode;
@@ -104,15 +107,15 @@ public class PurchaseRequest {
     public void setTotal(double total) {
         this.total = total;
     }
+    
+	public LocalDateTime getSubmittedDate() {
+		return submittedDate;
+	}
 
-    public String getSubmittedDate() {
-        return submittedDate;
-    }
-
-    public void setSubmittedDate(String submittedDate) {
-        this.submittedDate = submittedDate;
-    }
-
+	public void setSubmittedDate(LocalDateTime submittedDate) {
+		this.submittedDate = submittedDate;
+	}
+    
     public String getReasonForRejection() {
         return reasonForRejection;
     }
@@ -127,8 +130,6 @@ public class PurchaseRequest {
 				+ justification + ", dateNeeded=" + dateNeeded + ", deliveryMode=" + deliveryMode + ", status=" + status
 				+ ", total=" + total + ", submittedDate=" + submittedDate + ", reasonForRejection=" + reasonForRejection
 				+ "]";
-	}
-    
-    
+	}   
 }
 

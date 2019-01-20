@@ -12,7 +12,10 @@ public class PurchaseRequestLineItem {
     @ManyToOne
     @JoinColumn(name="purchaseRequestId")
     private PurchaseRequest purchaseRequest;
-    private int productId;
+//    private int productId;
+    @ManyToOne
+    @JoinColumn(name="productId")
+    private Product product;
     private int quantity;
 
     public int getId() {
@@ -31,15 +34,15 @@ public class PurchaseRequestLineItem {
         this.purchaseRequest = purchaseRequest;
     }
 
-    public int getProductId() {
-        return productId;
-    }
+    public Product getProduct() {
+		return product;
+	}
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    public int getQuantity() {
+	public int getQuantity() {
         return quantity;
     }
 
@@ -49,8 +52,8 @@ public class PurchaseRequestLineItem {
 
 	@Override
 	public String toString() {
-		return "PurchaseRequestLineItem [id=" + id + ", Purchase Request: " + purchaseRequest + ", productId="
-				+ productId + ", quantity=" + quantity + "]";
+		return "PurchaseRequestLineItem [id=" + id + ", Purchase Request: " + purchaseRequest + ", Product: "
+				+ product + ", quantity=" + quantity + "]";
 	}
     
     

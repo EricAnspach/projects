@@ -14,8 +14,7 @@ public class PurchaseRequestLineItemDB {
 	public static PurchaseRequestLineItem getPurchaseRequestLineItemById(int purchaseRequestLineItemID) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		try {
-			PurchaseRequestLineItem purchaseRequestLineItem = em.find(PurchaseRequestLineItem.class, purchaseRequestLineItemID);
-			
+			PurchaseRequestLineItem purchaseRequestLineItem = em.find(PurchaseRequestLineItem.class, purchaseRequestLineItemID);			
 			return purchaseRequestLineItem;
 		}
 		finally {
@@ -29,8 +28,7 @@ public class PurchaseRequestLineItemDB {
 		List<PurchaseRequestLineItem> purchaseRequestLineItems = new ArrayList<>();
 		try {
 			Query q = em.createQuery("SELECT p FROM PurchaseRequestLineItem p");
-			purchaseRequestLineItems = q.getResultList();
-			
+			purchaseRequestLineItems = q.getResultList();			
 		}
 		finally {
 			em.close();
@@ -54,8 +52,7 @@ public class PurchaseRequestLineItemDB {
 			trans.rollback();
 		} finally {
 			em.close();
-		}
-		
+		}		
 		return success;
 	}
 	
@@ -72,8 +69,6 @@ public class PurchaseRequestLineItemDB {
 			trans.rollback();
 		} finally {
 			em.close();
-		}
-		
+		}		
 	}
-
 }

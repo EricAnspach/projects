@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;import javax.transaction.TransactionalException;
 
 import com.prs.db.DBUtil;
+import com.prs.util.Console;
 
 public class UserDB {
 	public static User getUserById(int userID) {
@@ -42,7 +43,7 @@ public class UserDB {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
 		boolean success = false;
-;
+
 		try {
 			trans.begin();
 			em.persist(user);
@@ -73,5 +74,23 @@ public class UserDB {
 			em.close();
 		}
 		
+	}
+	
+	public static boolean update(User user) {
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();		
+		boolean success = false;
+		
+		try {
+			trans.begin();
+			em.merge(user);
+			trans.commit();
+			success = true;
+		} catch (Exception e) {
+			trans.rollback();
+		} finally {
+			em.close();
+		}
+		return success;
 	}
 }

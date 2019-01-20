@@ -1,7 +1,11 @@
 package com.prs;
 
+import java.io.ObjectInputStream.GetField;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.sql.Update;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -28,7 +32,7 @@ public class PrsJpaDemo1Application {
 		displayMenu();
 		int option = 0;
 		
-		while (option != 12) {
+		while (option != 23) {
 			option = Console.getInt("Enter option: ");
 			
 			switch (option) {
@@ -127,23 +131,144 @@ public class PrsJpaDemo1Application {
 				}
 				break;
 			case 10:
+				// get product
+				int productId = Console.getInt("Enter product id: ");
+				Product product = ProductDB.getProductById(productId);
+				System.out.println(product);
+				break;
+			case 11:
+				// Add a product
+				Product productToAdd = new Product();
+            	Console.displayLine("New product...");
+            	int vendorId = Console.getInt("Enter vendor id: ");
+            	String partNumber = Console.getString("Enter product part number: ");
+            	String productName = Console.getString("Enter product name: ");
+            	double price = Console.getDouble("Enter price: ");
+            	String unit = Console.getString("Enter product unit: ");
+            	String photopath = Console.getString("Enter photopath: ");
+            	
+            	Vendor vendorOfProduct = VendorDB.getVendorById(vendorId);
+            
+            	productToAdd.setVendor(vendorOfProduct);
+            	productToAdd.setPartNumber(partNumber);
+            	productToAdd.setName(productName);
+            	productToAdd.setPrice(price);
+            	productToAdd.setUnit(unit);
+            	productToAdd.setPhotoPath(photopath);
+								
+				if (ProductDB.add(productToAdd)) {
+					Console.displayLine("Product " + productName + " added to the database.");
+				}
+				break;
+			case 12:
+				// Remove product
+				int productIdToRemove = Console.getInt("Enter id of product to remove: ");
+				Product productToRemove = ProductDB.getProductById(productIdToRemove);
+				ProductDB.delete(productToRemove);			
+				break;
+			case 13:
 				// List all purchase requests
 				List<PurchaseRequest> purchaseRequests = PurchaseRequestDB.getAll();				
 				for (PurchaseRequest p : purchaseRequests) {
 					System.out.println(p);
 				}
 				break;
-			case 11:
+			case 14:
+				// get purchase request
+				int purchaseRequestId = Console.getInt("Enter purchase request id: ");
+				PurchaseRequest purchaseRequest = PurchaseRequestDB.getPurchaseRequestById(purchaseRequestId);
+				System.out.println(purchaseRequest);
+				// displayTotal(purchaseRequest);
+				break;
+			case 15:
+				// Add a purchase request
+				PurchaseRequest purchaseRequestToAdd = new PurchaseRequest();
+            	Console.displayLine("New purchase request...");
+            	int userId = Console.getInt("Enter user id: ");
+            	String description = Console.getString("Enter purchase request description: ");
+            	String justification = Console.getString("Enter justification: ");
+            	String dateNeededString = Console.getString("Enter date needed (YYYY-MM-DD: ");
+            	String deliveryMode = Console.getString("Enter delivery mode: ");
+            	
+            	User purchaseRequestUser = UserDB.getUserById(userId);
+                  	            
+            	purchaseRequestToAdd.setUser(purchaseRequestUser);
+            	purchaseRequestToAdd.setDescription(description);
+            	purchaseRequestToAdd.setJustification(justification);
+            	purchaseRequestToAdd.setDateNeeded(LocalDate.parse(dateNeededString));
+            	purchaseRequestToAdd.setDeliveryMode(deliveryMode);
+            	purchaseRequestToAdd.setStatus("New");
+            	purchaseRequestToAdd.setTotal(0.00);
+            	purchaseRequestToAdd.setSubmittedDate(LocalDateTime.now());
+            	purchaseRequestToAdd.setReasonForRejection("");
+								
+				if (PurchaseRequestDB.add(purchaseRequestToAdd)) {
+					Console.displayLine("Purchase request added to the database.\n");
+				}
+				break;
+			case 17:
 				// List all purchase requests line items
 				List<PurchaseRequestLineItem> purchaseRequestLineItems = PurchaseRequestLineItemDB.getAll();				
 				for (PurchaseRequestLineItem p : purchaseRequestLineItems) {
 					System.out.println(p);
 				}
 				break;
+			case 18:
+				// get purchase request line item
+				int purchaseRequestLineItemId = Console.getInt("Enter purchase request line item id: ");
+				PurchaseRequestLineItem purchaseRequestLineItem =PurchaseRequestLineItemDB.getPurchaseRequestLineItemById(purchaseRequestLineItemId);
+				System.out.println(purchaseRequestLineItem);
+				break;
+			case 19:
+				// Add a purchase request line item
+				PurchaseRequestLineItem purchaseRequestLineItemToAdd = new PurchaseRequestLineItem();
+            	Console.displayLine("New purchase request line item...");
+            	int purchaseRequestIdForLI = Console.getInt("Enter purchase request id: ");
+            	int productIdToAdd = Console.getInt("Enter product id: ");
+            	int quantity = Console.getInt("Enter quantity: ");
+            	
+            	PurchaseRequest purchaseRequestToAddTo = PurchaseRequestDB.getPurchaseRequestById(purchaseRequestIdForLI);
+            	Product productToAddToLI = ProductDB.getProductById(productIdToAdd);
+                  	            
+            	purchaseRequestLineItemToAdd.setPurchaseRequest(purchaseRequestToAddTo);
+            	purchaseRequestLineItemToAdd.setProduct(productToAddToLI);
+            	purchaseRequestLineItemToAdd.setQuantity(quantity);            
+								
+				if (PurchaseRequestLineItemDB.add(purchaseRequestLineItemToAdd)) {
+					Console.displayLine("Purchase request line item added to the purchase request.\n");
+				}
+				double purchaseRequestAmount = PurchaseRequestDB.getPurchaseRequestTotal(purchaseRequestIdForLI);
+				System.out.println(purchaseRequestAmount);
+				break;
+			case 21:
+				// Update user
+				Console.displayLine("\nUpdate a User Name...");
+				// Enter userID to change
+				int idToUpdate = Console.getInt("Enter user id: ");
+				// Get User for ID
+				User userToUpdate = UserDB.getUserById(idToUpdate);
+				// Get input for new userName
+				String newUserName = Console.getString("Enter new username: ");
+				// set userName to new value
+				userToUpdate.setUserName(newUserName);
+				// Save new user to id
+				if (UserDB.update(userToUpdate)) {
+					Console.displayLine("User successfully updated\n");
+				}
+				break;
+			case 22:
+				// get all products for a given vendor
+				int vid = Console.getInt("Enter vendor id: ");
+				List<Product> vendorProducts = ProductDB.getAllProductsByVendorId(vid);
+				
+				for (Product p : vendorProducts) {
+					System.out.println(p);
+				}
+			case 99:
+				displayMenu();
 			default:
 				break;
-			}
-			
+			}			
 		}
 		Console.displayLine("Bye!");
 	}
@@ -159,9 +284,21 @@ public class PrsJpaDemo1Application {
 		Console.displayLine("7 - Add vendor");
 		Console.displayLine("8 - Remove vendor");
 		Console.displayLine("9 - List all products");
-		Console.displayLine("10 - List all purchase requests");
-		Console.displayLine("11 - List all purchase request line items");
-		Console.displayLine("12 - Exit");
+		Console.displayLine("10 - Get a product");
+		Console.displayLine("11 - Add a product");
+		Console.displayLine("12 - Remove a product");
+		Console.displayLine("13 - List all purchase requests");
+		Console.displayLine("14 - Get a purchase request");
+		Console.displayLine("15 - Add a purchase request");
+		Console.displayLine("16 - Remove a purchase request");
+		Console.displayLine("17 - List all purchase request line items");
+		Console.displayLine("18 - Get a purchase request line item");
+		Console.displayLine("19 - Add a purchase request line item");
+		Console.displayLine("20 - Remove purchase request line item");
+		Console.displayLine("21 - Update a user name");
+		Console.displayLine("22 - List products by vendor id");
+		Console.displayLine("23 - Exit");
+		Console.displayLine("99 - Display menu");
 	}	
 }
 

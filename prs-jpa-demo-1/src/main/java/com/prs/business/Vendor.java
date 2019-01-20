@@ -1,5 +1,7 @@
 package com.prs.business;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,8 @@ public class Vendor {
     private String phoneNumber;
     private String email;
     private boolean isPreApproved;
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="vendor")
+    private List<Product> products;
 
     public int getId() {
         return id;
@@ -96,13 +100,21 @@ public class Vendor {
 
     public void setPreApproved(boolean preApproved) {
         isPreApproved = preApproved;
-    }
+    }    
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 
 	@Override
 	public String toString() {
 		return "Vendor [id=" + id + ", code=" + code + ", name=" + name + ", address=" + address + ", city=" + city
 				+ ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", email=" + email
-				+ ", isPreApproved=" + isPreApproved + "]";
+				+ ", isPreApproved=" + isPreApproved + ", products: " + products + "]";
 	}
     
     
