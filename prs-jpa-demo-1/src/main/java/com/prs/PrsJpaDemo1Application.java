@@ -37,7 +37,7 @@ public class PrsJpaDemo1Application {
 			
 			switch (option) {
 			case 1:
-				// get all users
+				// list all users
 				List<User> users = UserDB.getAll();
 				
 				for (User user : users) {
@@ -45,10 +45,11 @@ public class PrsJpaDemo1Application {
 				}
 				break;
 			case 2:
-				// get user
+				// get a user
 				int id = Console.getInt("Enter user id: ");
 				User user = UserDB.getUserById(id);
 				System.out.println(user);
+				break;
 			case 3:
 				// add user
 				User userToAdd = new User();
@@ -78,7 +79,7 @@ public class PrsJpaDemo1Application {
 				UserDB.delete(userToRemove);			
 				break;
 			case 5:
-				// get all vendors
+				// list all vendors
 				List<Vendor> vendors = VendorDB.getAll();
 				
 				for (Vendor vendor : vendors) {
@@ -86,7 +87,7 @@ public class PrsJpaDemo1Application {
 				}
 				break;
 			case 6:
-				// get vendor
+				// get a vendor
 				id = Console.getInt("Enter vendor id: ");
 				Vendor vendor = VendorDB.getVendorById(id);
 				System.out.println(vendor);
@@ -131,7 +132,7 @@ public class PrsJpaDemo1Application {
 				}
 				break;
 			case 10:
-				// get product
+				// get a product
 				int productId = Console.getInt("Enter product id: ");
 				Product product = ProductDB.getProductById(productId);
 				System.out.println(product);
@@ -174,7 +175,7 @@ public class PrsJpaDemo1Application {
 				}
 				break;
 			case 14:
-				// get purchase request
+				// get a purchase request
 				int purchaseRequestId = Console.getInt("Enter purchase request id: ");
 				PurchaseRequest purchaseRequest = PurchaseRequestDB.getPurchaseRequestById(purchaseRequestId);
 				System.out.println(purchaseRequest);
@@ -187,7 +188,7 @@ public class PrsJpaDemo1Application {
             	int userId = Console.getInt("Enter user id: ");
             	String description = Console.getString("Enter purchase request description: ");
             	String justification = Console.getString("Enter justification: ");
-            	String dateNeededString = Console.getString("Enter date needed (YYYY-MM-DD: ");
+            	String dateNeededString = Console.getString("Enter date needed (YYYY-MM-DD): ");
             	String deliveryMode = Console.getString("Enter delivery mode: ");
             	
             	User purchaseRequestUser = UserDB.getUserById(userId);
@@ -206,6 +207,12 @@ public class PrsJpaDemo1Application {
 					Console.displayLine("Purchase request added to the database.\n");
 				}
 				break;
+			case 16:
+				// Remove a purchase request
+				int purchaseRequestIdToRemove = Console.getInt("Enter id of purchase request to remove: ");
+				PurchaseRequest purchaseRequestToRemove = PurchaseRequestDB.getPurchaseRequestById(purchaseRequestIdToRemove);
+				PurchaseRequestDB.delete(purchaseRequestToRemove);	
+				break;
 			case 17:
 				// List all purchase requests line items
 				List<PurchaseRequestLineItem> purchaseRequestLineItems = PurchaseRequestLineItemDB.getAll();				
@@ -214,10 +221,15 @@ public class PrsJpaDemo1Application {
 				}
 				break;
 			case 18:
-				// get purchase request line item
+				// get a purchase request line item
 				int purchaseRequestLineItemId = Console.getInt("Enter purchase request line item id: ");
-				PurchaseRequestLineItem purchaseRequestLineItem =PurchaseRequestLineItemDB.getPurchaseRequestLineItemById(purchaseRequestLineItemId);
+				PurchaseRequestLineItem purchaseRequestLineItem = 
+						PurchaseRequestLineItemDB.getPurchaseRequestLineItemById(purchaseRequestLineItemId);
 				System.out.println(purchaseRequestLineItem);
+				PurchaseRequest pRequestOfLI = purchaseRequestLineItem.getPurchaseRequest();
+				int pRequestId = pRequestOfLI.getId();
+				double purchaseRequestAmount = PurchaseRequestDB.getPurchaseRequestTotal(pRequestId);
+				System.out.println("Total cost of purchase request: " + purchaseRequestAmount);
 				break;
 			case 19:
 				// Add a purchase request line item
@@ -237,8 +249,19 @@ public class PrsJpaDemo1Application {
 				if (PurchaseRequestLineItemDB.add(purchaseRequestLineItemToAdd)) {
 					Console.displayLine("Purchase request line item added to the purchase request.\n");
 				}
-				double purchaseRequestAmount = PurchaseRequestDB.getPurchaseRequestTotal(purchaseRequestIdForLI);
-				System.out.println(purchaseRequestAmount);
+				purchaseRequestAmount = PurchaseRequestDB.getPurchaseRequestTotal(purchaseRequestIdForLI);
+				System.out.println("Total cost of purchase request: " + purchaseRequestAmount);
+				break;
+			case 20:
+				// Remove a purchase request line item
+				int pRLIIdToRemove = Console.getInt("Enter id of purchase request line item to remove: ");				
+				PurchaseRequestLineItem pRLIToRemove = PurchaseRequestLineItemDB.getPurchaseRequestLineItemById(pRLIIdToRemove);
+				PurchaseRequest thisPurchaseRequest = pRLIToRemove.getPurchaseRequest();
+				PurchaseRequestLineItemDB.delete(pRLIToRemove);
+				
+				int thisPurchaseRequestId = thisPurchaseRequest.getId();
+				purchaseRequestAmount = PurchaseRequestDB.getPurchaseRequestTotal(thisPurchaseRequestId);
+				System.out.println("Total cost of purchase request: " + purchaseRequestAmount);
 				break;
 			case 21:
 				// Update user

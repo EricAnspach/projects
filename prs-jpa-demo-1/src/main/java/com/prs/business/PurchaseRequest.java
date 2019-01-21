@@ -126,7 +126,7 @@ public class PurchaseRequest {
 
 	@Override
 	public String toString() {
-		return "PurchaseRequest [id=" + id + ", User: " + user + ", description=" + description + ", justification="
+		return "PurchaseRequest [id=" + id + ", User: " + user.getUserName() + ", description=" + description + ", justification="
 				+ justification + ", dateNeeded=" + dateNeeded + ", deliveryMode=" + deliveryMode + ", status=" + status
 				+ ", total=" + total + ", submittedDate=" + submittedDate + ", reasonForRejection=" + reasonForRejection
 				+ "]";

@@ -52,7 +52,7 @@ public class PurchaseRequestLineItem {
 
 	@Override
 	public String toString() {
-		return "PurchaseRequestLineItem [id=" + id + ", Purchase Request: " + purchaseRequest + ", Product: "
+		return "PurchaseRequestLineItem [id=" + id + ", Purchase Request: " + purchaseRequest.getId() + " " + purchaseRequest.getUser() + ", Product: "
 				+ product + ", quantity=" + quantity + "]";
 	}
     

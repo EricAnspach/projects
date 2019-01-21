@@ -83,8 +83,8 @@ public class PurchaseRequestDB {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		List<PurchaseRequestLineItem> lineItems = new ArrayList<>();
 		try {
-			String qString = "SELECT p FROM PurchaseRequestLineItem p"
-							+ " WHERE p.purchaserequest.id = :inPrid";
+			String qString = "SELECT p FROM PurchaseRequestLineItem p "
+							+ "WHERE p.purchaseRequest.id = :inPrid";
 			TypedQuery<PurchaseRequestLineItem> tq = em.createQuery(qString, PurchaseRequestLineItem.class);
 			tq.setParameter("inPrid", prid);			
 			
