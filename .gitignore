@@ -14,7 +14,7 @@ local.properties
 .recommenders
 *.iml
 *.gitignore
-*.xml
+
 
 # External tool builders
 .externalToolBuilders/
