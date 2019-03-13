@@ -35,7 +35,9 @@ public class MovieCollection {
     }
 
     public double getLowestRating() {
-        return movieList.stream().map(m -> m.getRating()).reduce(5.0, (a, b) -> Math.min(a, b));
+        return movieList.stream()
+                .map(m -> m.getRating())
+                .reduce(5.0, (a, b) -> Math.min(a, b));
     }
 
     public double getHighestRating() {
